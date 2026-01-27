@@ -1,0 +1,189 @@
+// 1. IMPORT TYPES (Do not define them here!)
+import { Event, Location, Staff } from '../types';
+
+// --- MOCK DATA ---
+export const GEC_CENTER = { lat: 15.4226, lng: 73.9802 };
+
+export const locations: Location[] = [
+  // --- REAL GEC LOCATIONS ---
+  { id: 'loc-comp', name: 'Computer Engineering Dept', building: 'Computer Block', floor: 'Ground', lat: 15.42438, lng: 73.97837, category: 'department' },
+  { id: 'loc-it', name: 'Information Technology Dept', building: 'IT Block', floor: 'Ground', lat: 15.42478, lng: 73.97977, category: 'department' },
+  { id: 'loc-mech', name: 'Mechanical Engineering Dept', building: 'Mechanical Block', floor: 'Ground', lat: 15.42336, lng: 73.97868, category: 'department' },
+  { id: 'loc-mining', name: 'Mining Engineering Dept', building: 'Mining Block', floor: 'Ground', lat: 15.42510, lng: 73.97861, category: 'department' },
+  { id: 'loc-etc', name: 'ETC Engineering Dept', building: 'ETC Block', floor: 'Ground', lat: 15.42578, lng: 73.97932, category: 'department' },
+  { id: 'loc-civil', name: 'Civil Engineering Dept', building: 'Civil Block', floor: 'Ground', lat: 15.42377, lng: 73.97866, category: 'department' },
+  { id: 'loc-elec', name: 'Electrical Engineering Dept', building: 'Electrical Block', floor: 'Ground', lat: 15.42444, lng: 73.97871, category: 'department' },
+  { id: 'loc-sci', name: 'Science & Humanities', building: 'Science Block', floor: 'Ground', lat: 15.42304, lng: 73.97917, category: 'department' },
+  { id: 'loc-admin', name: 'Admin Block', building: 'Main Building', floor: 'Ground', lat: 15.42260, lng: 73.98025, category: 'admin' },
+  { id: 'loc-lib', name: 'Central Library', building: 'Library', floor: 'Ground', lat: 15.42283, lng: 73.98107, category: 'amenity' },
+  { id: 'loc-canteen', name: 'GEC Mess / Canteen', building: 'Mess', floor: 'Ground', lat: 15.42352, lng: 73.98154, category: 'amenity' },
+  { id: 'loc-gym', name: 'Gymkhana', building: 'Gym', floor: 'Ground', lat: 15.42556, lng: 73.98050, category: 'amenity' },
+  { id: 'loc-bank', name: 'Union Bank', building: 'Bank', floor: 'Ground', lat: 15.42160, lng: 73.98197, category: 'amenity' },
+  { id: 'loc-temple', name: 'Hanuman Temple', building: 'Temple', floor: 'Ground', lat: 15.42072, lng: 73.98157, category: 'amenity' },
+  { id: 'loc-workshop', name: 'Mechanical Workshop', building: 'Workshop', floor: 'Ground', lat: 15.42397, lng: 73.97967, category: 'lab' },
+  { id: 'loc-bh1', name: 'Boys Hostel 1', building: 'BH1', floor: 'Ground', lat: 15.42347, lng: 73.98162, category: 'hostel' },
+  { id: 'loc-bh2', name: 'Boys Hostel 2', building: 'BH2', floor: 'Ground', lat: 15.42395, lng: 73.98118, category: 'hostel' },
+  { id: 'loc-gh1', name: 'Girls Hostel 1', building: 'GH1', floor: 'Ground', lat: 15.42067, lng: 73.98006, category: 'hostel' },
+  { id: 'loc-iit', name: 'IIT Hostel', building: 'IIT Block', floor: 'Ground', lat: 15.42288, lng: 73.98290, category: 'hostel' },
+];
+
+export const staffMembers: Staff[] = [
+  { id: 'staff-1', name: 'teslin sir', designation: 'Professor', department: 'Computer Engineering', photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100', locationId: 'loc-comp' },
+  { id: 'staff-2', name: 'Prof. S. Pawar', designation: 'HOD', department: 'Information Technology', photo: 'https://images.unsplash.com/photo-1573496359-0933ca935f9d?w=100', locationId: 'loc-it' },
+  { id: 'staff-3', name: 'Dr. R. Shirodkar', designation: 'Associate Prof', department: 'Mechanical', photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100', locationId: 'loc-mech' },
+];
+
+export const events: Event[] = [
+  { 
+    id: 'evt-1', 
+    title: 'Tech Spectrum 2026', 
+    date: '2026-02-15', 
+    startTime: '10:00', // Now valid because we imported the type
+    endTime: '17:00', 
+    locationId: 'loc-admin', 
+    type: 'cultural', 
+    bannerImage: 'https://i.postimg.cc/5tqS3B1Q/t1.jpg', 
+    venue: 'Admin Auditorium' 
+  },
+  { 
+    id: 'evt-2', 
+    title: 'AI Workshop', 
+    date: '2026-02-18', 
+    startTime: '14:00', 
+    endTime: '16:00', 
+    locationId: 'loc-comp', 
+    type: 'academic', 
+    bannerImage: 'https://i.postimg.cc/5tqS3B1Q/t1.jpg', 
+    venue: 'Computer Seminar Hall' 
+  },
+];
+
+export const paths: any[] = []; 
+export const CUSTOM_PATHS: Record<string, { lat: number; lng: number }[]> = {};
+
+// --- YOUR ROAD NETWORK ---
+export const CAMPUS_ROADS: { lat: number; lng: number }[][] = [
+  [
+    { lat: 15.420741690626901, lng: 73.98212671279909 },
+    { lat: 15.421062310652468, lng: 73.98177266120912 },
+    { lat: 15.421403615297153, lng: 73.98174047470094 },
+    { lat: 15.42180697460872, lng: 73.9816439151764 },
+    { lat: 15.422168963067573, lng: 73.98151516914369 },
+    { lat: 15.422541293395614, lng: 73.98137569427492 },
+    { lat: 15.423037732794704, lng: 73.98136496543886 },
+    { lat: 15.422975677934712, lng: 73.98201942443849 },
+    { lat: 15.423254924658655, lng: 73.98208379745485 },
+    { lat: 15.423782389668341, lng: 73.98216962814332 },
+    { lat: 15.424165059523116, lng: 73.9816439151764 },
+    { lat: 15.42381341698013, lng: 73.98136496543886 },
+    { lat: 15.423834101852089, lng: 73.98066759109498 },
+    { lat: 15.424475331860684, lng: 73.98064613342287 },
+    { lat: 15.42429951092631, lng: 73.98148298263551 },
+    { lat: 15.424216771611572, lng: 73.98162245750429 },
+    { lat: 15.423834101852089, lng: 73.9813542366028 },
+    { lat: 15.423058417743912, lng: 73.9813542366028 },
+    { lat: 15.423492801201418, lng: 73.98133277893068 },
+    { lat: 15.42382375941637, lng: 73.98133277893068 },
+    { lat: 15.423834101852089, lng: 73.9806890487671 },
+    { lat: 15.42374101991207, lng: 73.98036718368532 },
+    { lat: 15.423368691734847, lng: 73.98036718368532 },
+    { lat: 15.423451431387475, lng: 73.98131132125856 },
+    { lat: 15.423379034193225, lng: 73.98033499717714 },
+    { lat: 15.422872253126851, lng: 73.9803457260132 },
+    { lat: 15.422872253126851, lng: 73.98017406463624 },
+    { lat: 15.422665403356632, lng: 73.9801847934723 },
+    { lat: 15.422923965537219, lng: 73.98017406463624 },
+    { lat: 15.422872253126851, lng: 73.97948741912843 },
+    { lat: 15.423285952049257, lng: 73.97947669029237 },
+    { lat: 15.423368691734847, lng: 73.98030281066896 },
+    { lat: 15.423327321896174, lng: 73.9794445037842 },
+    { lat: 15.423792732106108, lng: 73.97947669029237 },
+    { lat: 15.42382375941637, lng: 73.98033499717714 },
+    { lat: 15.423803074543379, lng: 73.97947669029237 },
+    { lat: 15.424144374684118, lng: 73.97942304611207 },
+    { lat: 15.425064848024888, lng: 73.97946596145631 },
+    { lat: 15.425095875145079, lng: 73.97910118103029 },
+    { lat: 15.425095875145079, lng: 73.9794445037842 },
+    { lat: 15.425675047204118, lng: 73.9794445037842 },
+    { lat: 15.425530254340794, lng: 73.9794445037842 },
+    // Shortcut you asked for:
+    { lat: 15.424558071072397, lng: 73.98064613342287 }, 
+    // ----------------------
+    { lat: 15.424258141273063, lng: 73.9794445037842 },
+    { lat: 15.424185744360036, lng: 73.97882223129274 },
+    { lat: 15.423885814022947, lng: 73.97846817970277 },
+    { lat: 15.423265267122693, lng: 73.97852182388307 },
+    { lat: 15.423079102691073, lng: 73.97853255271913 },
+    { lat: 15.42311013010792, lng: 73.97887587547304 },
+    { lat: 15.423285952049257, lng: 73.97884368896486 },
+    { lat: 15.423244582194094, lng: 73.97942304611207 },
+    { lat: 15.423068760217747, lng: 73.97886514663698 },
+    { lat: 15.423068760217747, lng: 73.97886514663698 },
+    { lat: 15.422334443295776, lng: 73.97892951965333 },
+    { lat: 15.422370642078118, lng: 73.9786183834076 },
+    { lat: 15.422344785805652, lng: 73.97893488407136 },
+    { lat: 15.42191039994707, lng: 73.97866666316988 },
+    { lat: 15.422344785805652, lng: 73.97891879081727 },
+    { lat: 15.422391327093761, lng: 73.9794820547104 },
+    { lat: 15.422841225674459, lng: 73.97949814796449 },
+    { lat: 15.422396498347352, lng: 73.9794820547104 },
+    { lat: 15.421977626389355, lng: 73.97950887680055 },
+    { lat: 15.422018996496874, lng: 73.9801847934723 },
+    { lat: 15.422396498347352, lng: 73.98017406463624 },
+    { lat: 15.422396498347352, lng: 73.97951424121858 },
+    { lat: 15.42235512831502, lng: 73.98052811622621 },
+    { lat: 15.422013825233895, lng: 73.98053348064424 },
+    { lat: 15.422018996496874, lng: 73.9801847934723 },
+    { lat: 15.421987968917005, lng: 73.98103237152101 },
+    { lat: 15.421946598803315, lng: 73.9812469482422 },
+    { lat: 15.422112079208674, lng: 73.9814990758896 },
+    { lat: 15.421936256273591, lng: 73.98126304149629 },
+    { lat: 15.421693206677084, lng: 73.98141860961915 },
+    { lat: 15.421770775728149, lng: 73.98162245750429 },
+    { lat: 15.422396498347352, lng: 73.98139715194704 },
+    { lat: 15.422349957060412, lng: 73.98051738739015 },
+    { lat: 15.422515437144396, lng: 73.98137032985689 },
+    { lat: 15.421812145876864, lng: 73.98162782192232 },
+    { lat: 15.421708720489608, lng: 73.98138105869295 },
+    { lat: 15.421263990737556, lng: 73.9814615249634 },
+    { lat: 15.42130018970647, lng: 73.98172974586488 },
+    { lat: 15.42112436608412, lng: 73.98172974586488 },
+    { lat: 15.42111402351347, lng: 73.981751203537 },
+    { lat: 15.42118125021352, lng: 73.98151516914369 },
+    { lat: 15.421082995798413, lng: 73.98122549057008 },
+    { lat: 15.420658949894793, lng: 73.98089289665224 },
+    { lat: 15.420927857153606, lng: 73.98110747337343 },
+    { lat: 15.421305360987233, lng: 73.98046374320985 },
+    { lat: 15.421191592780824, lng: 73.9806890487671 },
+    { lat: 15.420338329246627, lng: 73.9800935983658 },
+    { lat: 15.420493468331726, lng: 73.97942304611207 },
+    { lat: 15.420146990882092, lng: 73.98057639598848 },
+    { lat: 15.420648607300963, lng: 73.98089289665224 },
+    { lat: 15.419474719555168, lng: 73.98044764995576 },
+    { lat: 15.419335093699038, lng: 73.9809572696686 },
+    { lat: 15.419417834958445, lng: 73.98044228553773 },
+    { lat: 15.418745561271855, lng: 73.9802384376526 },
+    { lat: 15.418559392789378, lng: 73.98075342178346 },
+    { lat: 15.418838645450514, lng: 73.98028135299684 },
+    { lat: 15.417690604331987, lng: 73.97985219955446 }
+  ]
+];
+
+// --- 360 PANORAMA STORAGE ---
+export const PANORAMA_DATA: Record<string, string> = {
+  // Events
+  'evt-1': 'https://i.postimg.cc/5tqS3B1Q/t1.jpg',
+  'evt-2': 'https://i.postimg.cc/5tqS3B1Q/t1.jpg',
+  // Turns
+  '15.42381,73.98136': 'https://i.postimg.cc/PrBKyrGP/1p.jpg',
+  '15.42383,73.98069': 'https://i.postimg.cc/qR527j4y/2p.jpg',
+  '15.42456,73.98065': 'https://i.postimg.cc/PfvSw89s/3p.jpg',
+  '15.42553,73.97944': 'https://i.postimg.cc/j2DmWgNK/4p.jpg',
+  '15.42510,73.97944': 'https://i.postimg.cc/X781j6tj/5p.jpg',
+  '15.42510,73.97910': 'https://i.postimg.cc/T1kbs0Hm/6p.jpg',
+  '15.42426,73.97944': 'https://i.postimg.cc/02w5FZ3g/7p.jpg',
+  '15.42419,73.97882': 'https://i.postimg.cc/4x1Y2B7C/8p.jpg',
+  '15.42380,73.97948': 'https://i.postimg.cc/pLVWrxT4/9p.jpg',
+  '15.42382,73.98033': 'https://i.postimg.cc/fWjQ9F6T/10p.jpg',
+  'staff-1': 'https://i.postimg.cc/5tqS3B1Q/t1.jpg',
+};
