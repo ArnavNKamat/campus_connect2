@@ -17,10 +17,11 @@ import { AdminPanoramaUpload } from './components/AdminPanoramaUpload';
 import { AdminEventManagement } from './components/AdminEventManagement';
 import { AdminNotificationSender } from './components/AdminNotificationSender';
 import { CommunityFeed } from './components/CommunityFeed'; 
-import { PostsDashboard } from './components/PostsDashboard'; // Use PostsDashboard for community
+import { PostsDashboard } from './components/PostsDashboard'; 
 import { UserProfile } from './components/UserProfile'; 
 import Auth from './components/Auth'; 
 
+// Data
 import { staffMembers as initialStaff, locations as initialLocations, events as initialEvents } from './data/mockData';
 import { UserRole, Staff, Location, Event, Notification } from './types';
 import { Button } from './components/ui/button';
@@ -48,7 +49,7 @@ export default function App() {
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
 
-  // Data State
+  // Data State (Local Storage)
   const [staffList, setStaffList] = useState<Staff[]>([]);
   const [locationList, setLocationList] = useState<Location[]>([]);
   const [eventsList, setEventsList] = useState<Event[]>([]);
@@ -89,10 +90,10 @@ export default function App() {
     setLocationList(savedLocs ? JSON.parse(savedLocs) : initialLocations);
     setEventsList(savedEvents ? JSON.parse(savedEvents) : initialEvents);
     setNotifications(savedNotes ? JSON.parse(savedNotes) : []);
-  }, [currentScreen]); // Reload when screen changes to sync admin updates
+  }, [currentScreen]); 
 
+  // Helpers to resolve objects
   const selectedStaff = selectedStaffId ? staffList.find(s => s.id === selectedStaffId) : null;
-  // Resolve location object for navigation
   const selectedLocation = selectedLocationId ? locationList.find(l => l.id === selectedLocationId) : 
                            selectedStaff ? locationList.find(l => l.id === selectedStaff.locationId) : null;
 
@@ -100,6 +101,19 @@ export default function App() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast.success("Logged out");
+  };
+
+  // THIS IS THE MISSING FUNCTION CAUSING YOUR ERROR
+  const handleGuestLogin = () => {
+    // Create a fake session for Guest
+    const guestSession: any = {
+        user: { id: 'guest', email: 'guest@gec.ac.in' },
+        access_token: 'guest-token',
+    };
+    setSession(guestSession);
+    setUserRole('student');
+    setCurrentScreen('student-map');
+    toast.success("Welcome, Guest!");
   };
 
   const handleAdminLoginSuccess = () => {
@@ -232,7 +246,10 @@ export default function App() {
         <div className="h-full flex flex-col justify-center items-center bg-gray-50">
            <h1 className="text-2xl font-bold mb-2 text-[#0056b3]">Campus Connect</h1>
            <p className="text-sm text-gray-500 mb-6">GEC Navigator & Community</p>
-           <Auth />
+           
+           {/* AUTH COMPONENT with Guest Handler passed down */}
+           <Auth onGuestLogin={handleGuestLogin} />
+           
            <button onClick={() => setShowAdminModal(true)} className="fixed bottom-4 text-xs text-gray-300 hover:text-gray-500 underline">
              Admin Access
            </button>
@@ -244,7 +261,6 @@ export default function App() {
           onNavigateToSearch={handleSearch}
           onNavigateToEvents={() => { setCurrentScreen('events'); setActiveTab('events'); }}
           onNavigateToNotifications={() => setActiveTab('notifications')}
-          // FIX: Changed to 'onNavigateToPosts' to match the component
           onNavigateToPosts={() => { setCurrentScreen('community'); setActiveTab('community'); }}
           onNavigateBackToMap={() => setActiveTab('home')}
           onNavigateToProfile={() => setCurrentScreen('profile')}
@@ -253,6 +269,7 @@ export default function App() {
           onVote={handleVote}
           session={session}
           onLogout={handleLogout}
+          isGuest={session?.user?.id === 'guest'}
         />
       )}
 
@@ -264,11 +281,13 @@ export default function App() {
         />
       )}
 
-      {currentScreen === 'community' && session && (
-        <PostsDashboard 
-          onBack={() => { setCurrentScreen('student-map'); setActiveTab('home'); }} 
-        />
-      )}
+    {currentScreen === 'community' && session && (
+  <PostsDashboard 
+    onBack={() => { setCurrentScreen('student-map'); setActiveTab('home'); }} 
+    // Add this line if your component accepts it, or just to be safe for future updates
+    // session={session} 
+  />
+)}
 
       {currentScreen === 'staff-detail' && selectedStaff && selectedLocation && (
         <StaffSearchResult
@@ -288,7 +307,6 @@ export default function App() {
         />
       )}
 
-      {/* FIX: Now 'EventsDashboard' accepts the 'events' prop */}
       {currentScreen === 'events' && (
         <EventsDashboard
           events={eventsList} 
@@ -301,6 +319,7 @@ export default function App() {
         />
       )}
 
+      {/* --- ADMIN SCREENS --- */}
       {currentScreen === 'admin-dashboard' && (
         <AdminDashboard
           onManageStaff={() => { setTempLocation(null); setCurrentScreen('admin-add-staff'); }}

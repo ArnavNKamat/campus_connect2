@@ -96,3 +96,16 @@ export interface Post {
   status?: 'open' | 'in_progress' | 'completed';
   accepted_by?: string;
 }
+// Add this to your existing types
+export interface Meetup {
+  id: string;
+  post_id: string;
+  host_id: string;
+  guest_id: string;
+  host_lat?: number;
+  host_lng?: number;
+  guest_lat?: number;
+  guest_lng?: number;
+  is_active: boolean;
+  created_at: string;
+}
